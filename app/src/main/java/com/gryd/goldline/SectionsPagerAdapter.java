@@ -4,7 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.gryd.goldline.fragments.FragmentFactory;
+import com.gryd.goldline.fragments.ItemFragment;
+import com.gryd.goldline.fragments.ItemType;
 
 /**
  * Created By: Yasith Jayawardana
@@ -20,7 +21,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return FragmentFactory.getItemViewInstance(position);
+        ItemType itemType = ItemType.valueOf(position);
+        return ItemFragment.newInstance(itemType);
     }
 
     @Override

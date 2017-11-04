@@ -6,8 +6,9 @@ package com.gryd.goldline.models;
  * Date: 11/4/17
  */
 
-abstract class Item {
+public abstract class Item {
     private String Brand;
+    private int Stocks;
 
     public String getBrand() {
         return Brand;
@@ -15,5 +16,13 @@ abstract class Item {
 
     public void setBrand(String brand) {
         Brand = brand;
+    }
+
+    public int getStocks() {
+        return Stocks;
+    }
+
+    public void setStocks(int stocks) {
+        Stocks = stocks;
     }
 }

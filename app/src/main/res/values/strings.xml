@@ -17,4 +17,5 @@
     <string name="text_country">Country</string>
     <string name="text_capacity">Capacity</string>
     <string name="text_warranty">Warranty</string>
+    <string name="string_input">Please fill out the details below</string>
 </resources>

@@ -4,7 +4,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gryd.goldline.fragments.TubeAddFragment">
+    tools:context="com.gryd.goldline.fragments.AddItemFragment">
 
     <TextView
         android:id="@+id/textView_brand"
@@ -22,7 +22,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -32,12 +34,13 @@
 
     <TextView
         android:id="@+id/textView_size"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:text="@string/text_size"
         app:layout_constraintBaseline_toBaselineOf="@+id/text_dimension"
+        app:layout_constraintEnd_toEndOf="@+id/textView_brand"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -46,7 +49,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
