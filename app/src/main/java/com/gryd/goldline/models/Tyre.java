@@ -1,6 +1,9 @@
 package com.gryd.goldline.models;
 
-import java.time.Year;
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created By: Yasith Jayawardana
@@ -11,7 +14,7 @@ import java.time.Year;
 public class Tyre extends Item {
     private String Size;
     private String Country;
-    private Year Make;
+    private int Make;
 
     public String getSize() {
         return Size;
@@ -29,11 +32,30 @@ public class Tyre extends Item {
         Country = country;
     }
 
-    public Year getMake() {
+    public int getMake() {
         return Make;
     }
 
-    public void setMake(Year make) {
+    public void setMake(int make) {
         Make = make;
+    }
+
+    @Override
+    public ItemType getType() {
+        return ItemType.tyre;
+    }
+
+    @Override
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put("brand", getBrand());
+        result.put("size", getSize());
+        result.put("country", getCountry());
+        result.put("make", getMake());
+        result.put("stocks", getStocks());
+
+        return result;
     }
 }

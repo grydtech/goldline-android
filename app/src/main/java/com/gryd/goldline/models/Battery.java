@@ -1,6 +1,9 @@
 package com.gryd.goldline.models;
 
-import java.time.Period;
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created By: Yasith Jayawardana
@@ -10,7 +13,8 @@ import java.time.Period;
 
 public class Battery extends Item {
     private int Capacity;
-    private Period Warranty;
+    private int Warranty;
+
 
     public int getCapacity() {
         return Capacity;
@@ -20,11 +24,29 @@ public class Battery extends Item {
         Capacity = capacity;
     }
 
-    public Period getWarranty() {
+    public int getWarranty() {
         return Warranty;
     }
 
-    public void setWarranty(Period warranty) {
+    public void setWarranty(int warranty) {
         Warranty = warranty;
+    }
+
+    @Override
+    public ItemType getType() {
+        return ItemType.battery;
+    }
+
+    @Override
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put("brand", getBrand());
+        result.put("capacity", getCapacity());
+        result.put("warranty", getWarranty());
+        result.put("stocks", getStocks());
+
+        return result;
     }
 }

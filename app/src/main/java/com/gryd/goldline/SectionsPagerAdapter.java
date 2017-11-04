@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.gryd.goldline.fragments.ItemFragment;
-import com.gryd.goldline.fragments.ItemType;
+import com.gryd.goldline.models.ItemType;
 
 /**
  * Created By: Yasith Jayawardana

@@ -10,8 +10,15 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.gryd.goldline.R;
+import com.gryd.goldline.models.Battery;
+import com.gryd.goldline.models.Item;
+import com.gryd.goldline.models.ItemType;
+import com.gryd.goldline.models.Tube;
+import com.gryd.goldline.models.Tyre;
+import com.gryd.goldline.models.data.FirebaseDb;
 
 /**
  * Created By: Yasith Jayawardana
@@ -36,21 +43,62 @@ public class AddItemFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
+        // Get the view
+        final View view = getActivity().findViewById(R.id.main_content);
+        final View subView = createSubView(inflater, null);
         // Build the layout
-        builder.setMessage(R.string.string_input)
-                .setView(createSubView(inflater, null))
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Snackbar.make(getActivity().findViewById(R.id.main_content), "Item Added Successfully", Snackbar.LENGTH_SHORT)
-                                .setAction("Action", null).show();
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Snackbar.make(getActivity().findViewById(R.id.main_content), "Canceled", Snackbar.LENGTH_SHORT)
-                                .setAction("Action", null).show();
-                    }
-                });
+        builder.setTitle(R.string.string_add);
+        builder.setView(subView);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // Variables
+                EditText brand = subView.findViewById(R.id.text_brand);
+                EditText dimension = subView.findViewById(R.id.text_dimension);
+                EditText country = subView.findViewById(R.id.text_country);
+                EditText make = subView.findViewById(R.id.text_make);
+                EditText capacity = subView.findViewById(R.id.text_capacity);
+                EditText warranty = subView.findViewById(R.id.text_warranty);
+
+                // Generate Item Object
+                ItemType itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
+                Item item = null;
+                switch (itemType) {
+                    case tyre:
+                        Tyre tyre = new Tyre();
+                        tyre.setBrand(brand.getText().toString());
+                        tyre.setCountry(country.getText().toString());
+                        tyre.setMake(Integer.parseInt(make.getText().toString()));
+                        tyre.setSize(dimension.getText().toString());
+                        tyre.setStocks(0);
+                        item = tyre;
+                        break;
+                    case battery:
+                        Battery battery = new Battery();
+                        battery.setBrand(brand.getText().toString());
+                        battery.setCapacity(Integer.parseInt(capacity.getText().toString()));
+                        battery.setWarranty(Integer.parseInt(warranty.getText().toString()));
+                        battery.setStocks(0);
+                        item = battery;
+                        break;
+                    case tube:
+                        Tube tube = new Tube();
+                        tube.setBrand(brand.getText().toString());
+                        tube.setSize(dimension.getText().toString());
+                        tube.setStocks(0);
+                        item = tube;
+                        break;
+                }
+                FirebaseDb.addItem(item);
+                Snackbar.make(view, "Item Added Successfully", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Snackbar.make(view, "Canceled", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+            }
+        });
         return builder.create();
     }
 
@@ -58,13 +106,13 @@ public class AddItemFragment extends DialogFragment {
         ItemType itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
         View view;
         switch (itemType) {
-            case Tyre:
+            case tyre:
                 view = inflater.inflate(R.layout.fragment_tyre_add, container, false);
                 break;
-            case Battery:
+            case battery:
                 view = inflater.inflate(R.layout.fragment_battery_add, container, false);
                 break;
-            case Tube:
+            case tube:
                 view = inflater.inflate(R.layout.fragment_tube_add, container, false);
                 break;
             default:

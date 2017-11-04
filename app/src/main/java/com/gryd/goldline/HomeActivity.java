@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gryd.goldline.fragments.AddItemFragment;
-import com.gryd.goldline.fragments.ItemType;
+import com.gryd.goldline.models.ItemType;
 
 public class HomeActivity extends AppCompatActivity {
 

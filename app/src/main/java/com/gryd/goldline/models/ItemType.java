@@ -1,4 +1,4 @@
-package com.gryd.goldline.fragments;
+package com.gryd.goldline.models;
 
 import android.util.SparseArray;
 
@@ -10,7 +10,7 @@ import android.util.SparseArray;
 
 public enum ItemType {
 
-    Tyre(0), Battery(1), Tube(2);
+    tyre(0), battery(1), tube(2);
 
     private static SparseArray<ItemType> map = new SparseArray<>();
 

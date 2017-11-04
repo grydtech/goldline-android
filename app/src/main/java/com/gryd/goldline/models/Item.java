@@ -1,5 +1,9 @@
 package com.gryd.goldline.models;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.Map;
+
 /**
  * Created By: Yasith Jayawardana
  * Email: yasith.jayawardana@icloud.com
@@ -9,6 +13,8 @@ package com.gryd.goldline.models;
 public abstract class Item {
     private String Brand;
     private int Stocks;
+
+    public abstract ItemType getType();
 
     public String getBrand() {
         return Brand;
@@ -25,4 +31,12 @@ public abstract class Item {
     public void setStocks(int stocks) {
         Stocks = stocks;
     }
+
+    @Override
+    public String toString() {
+        return Brand;
+    }
+
+    @Exclude
+    public abstract Map<String, Object> toMap();
 }
