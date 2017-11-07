@@ -3,6 +3,7 @@ package com.gryd.goldline.models;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -12,19 +13,24 @@ import java.util.Map;
  */
 
 public class Tube extends Item {
-    private String Size;
+    private String size;
 
     public String getSize() {
-        return Size;
+        return size;
     }
 
     public void setSize(String size) {
-        Size = size;
+        this.size = size;
     }
 
     @Override
-    public ItemType getType() {
-        return ItemType.tube;
+    public String toString() {
+        return String.format(
+                Locale.getDefault(),
+                "%s %s",
+                getBrand(),
+                getSize()
+        );
     }
 
     @Override

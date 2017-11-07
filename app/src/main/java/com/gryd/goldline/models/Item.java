@@ -11,31 +11,26 @@ import java.util.Map;
  */
 
 public abstract class Item {
-    private String Brand;
-    private int Stocks;
-
-    public abstract ItemType getType();
+    private String brand;
+    private int stocks;
 
     public String getBrand() {
-        return Brand;
+        return brand;
     }
 
     public void setBrand(String brand) {
-        Brand = brand;
+        this.brand = brand;
     }
 
     public int getStocks() {
-        return Stocks;
+        return stocks;
     }
 
     public void setStocks(int stocks) {
-        Stocks = stocks;
+        this.stocks = stocks;
     }
 
-    @Override
-    public String toString() {
-        return Brand;
-    }
+    public abstract String toString();
 
     @Exclude
     public abstract Map<String, Object> toMap();

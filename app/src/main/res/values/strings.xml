@@ -16,10 +16,11 @@
     <string name="text_make">Make</string>
     <string name="text_country">Country</string>
     <string name="text_capacity">Capacity</string>
-    <string name="text_warranty">Warranty</string>
+    <string name="text_warranty">Warranty (Y)</string>
     <string name="string_add">Add Item</string>
     <string name="text_stocks">In Stock:</string>
     <string name="text_na">N/A</string>
     <string name="text_plus">+</string>
     <string name="text_minus">-</string>
+    <string name="alert_negative_stocks">Stocks should be greater than 0</string>
 </resources>

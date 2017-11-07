@@ -3,6 +3,7 @@ package com.gryd.goldline.models;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -12,29 +13,35 @@ import java.util.Map;
  */
 
 public class Battery extends Item {
-    private int Capacity;
-    private int Warranty;
+    private int capacity;
+    private int warranty;
 
 
     public int getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(int capacity) {
-        Capacity = capacity;
+        this.capacity = capacity;
     }
 
     public int getWarranty() {
-        return Warranty;
+        return warranty;
     }
 
     public void setWarranty(int warranty) {
-        Warranty = warranty;
+        this.warranty = warranty;
     }
 
     @Override
-    public ItemType getType() {
-        return ItemType.battery;
+    public String toString() {
+        return String.format(
+                Locale.getDefault(),
+                "%s %d (%dY)",
+                getBrand(),
+                getCapacity(),
+                getWarranty()
+        );
     }
 
     @Override

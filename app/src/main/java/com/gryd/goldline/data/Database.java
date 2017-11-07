@@ -1,4 +1,4 @@
-package com.gryd.goldline.models.data;
+package com.gryd.goldline.data;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -13,7 +13,7 @@ import java.util.Map;
  * Date: 11/4/17
  */
 
-public class FirebaseDb {
+public class Database {
     // Write a message to the database
     private static final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final DatabaseReference itemsDatabase = database.getReference("item");
@@ -26,13 +26,13 @@ public class FirebaseDb {
         if (item == null) {
             return;
         }
-        String itemType = item.getType().toString();
+        String itemType = item.getClass().getSimpleName().toLowerCase();
         String key = String.valueOf(item.hashCode());
         itemsDatabase.child(itemType).child(key).setValue(item);
     }
 
     public static void updateItem(Item item) {
-        String itemType = item.getType().toString();
+        String itemType = item.getClass().getSimpleName().toLowerCase();
         String key = String.valueOf(item.hashCode());
         Map<String, Object> itemValues = item.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
@@ -41,7 +41,7 @@ public class FirebaseDb {
     }
 
     public static void removeItem(Item item) {
-        String itemType = item.getType().toString();
+        String itemType = item.getClass().getSimpleName().toLowerCase();
         String key = String.valueOf(item.hashCode());
         itemsDatabase.child(itemType).child(key).removeValue();
     }

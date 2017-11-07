@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.gryd.goldline.R;
+import com.gryd.goldline.data.Database;
 import com.gryd.goldline.models.Battery;
 import com.gryd.goldline.models.Item;
 import com.gryd.goldline.models.ItemType;
 import com.gryd.goldline.models.Tube;
 import com.gryd.goldline.models.Tyre;
-import com.gryd.goldline.models.data.FirebaseDb;
 
 /**
  * Created By: Yasith Jayawardana
@@ -88,7 +88,7 @@ public class AddItemFragment extends DialogFragment {
                         item = tube;
                         break;
                 }
-                FirebaseDb.addItem(item);
+                Database.addItem(item);
                 Snackbar.make(view, "Item Added Successfully", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }

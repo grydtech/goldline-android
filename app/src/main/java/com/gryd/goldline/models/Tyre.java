@@ -3,6 +3,7 @@ package com.gryd.goldline.models;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -12,37 +13,44 @@ import java.util.Map;
  */
 
 public class Tyre extends Item {
-    private String Size;
-    private String Country;
-    private int Make;
+    private String size;
+    private String country;
+    private int make;
 
     public String getSize() {
-        return Size;
+        return size;
     }
 
     public void setSize(String size) {
-        Size = size;
+        this.size = size;
     }
 
     public String getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(String country) {
-        Country = country;
+        this.country = country;
     }
 
     public int getMake() {
-        return Make;
+        return make;
     }
 
     public void setMake(int make) {
-        Make = make;
+        this.make = make;
     }
 
     @Override
-    public ItemType getType() {
-        return ItemType.tyre;
+    public String toString() {
+        return String.format(
+                Locale.getDefault(),
+                "%s %s (%s) %d",
+                getBrand(),
+                getSize(),
+                getCountry(),
+                getMake()
+        );
     }
 
     @Override
