@@ -28,6 +28,7 @@ public class FilterableItemAdapter<E extends Item> extends RecyclerView.Adapter<
     private final Filter filter;
     private List<E> items;
     private List<E> itemSource;
+    private String search_text;
 
     FilterableItemAdapter(Context context, List<E> source_items) {
         this.context = context;
@@ -38,13 +39,14 @@ public class FilterableItemAdapter<E extends Item> extends RecyclerView.Adapter<
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();
                 if (constraint == null || constraint.length() == 0) {
+                    search_text = "";
                     results.values = itemSource;
                     results.count = itemSource.size();
                 } else {
                     ArrayList<E> fRecords = new ArrayList<>();
                     for (E item : itemSource) {
                         String item_name = item.toString().toLowerCase().trim();
-                        String search_text = constraint.toString().toLowerCase().trim();
+                        search_text = constraint.toString().toLowerCase().trim();
                         if (item_name.contains(search_text)) {
                             fRecords.add(item);
                         }
@@ -68,7 +70,12 @@ public class FilterableItemAdapter<E extends Item> extends RecyclerView.Adapter<
     void notifyItemSourceUpdated() {
         this.items.clear();
         this.items.addAll(this.itemSource);
-        this.notifyDataSetChanged();
+        this.filter.filter(search_text, new Filter.FilterListener() {
+            @Override
+            public void onFilterComplete(int i) {
+                FilterableItemAdapter.this.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
