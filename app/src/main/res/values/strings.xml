@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Goldline</string>
 
+    <string name="tag_item_fragment">ITEM_FRAGMENT</string>
+
     <string name="tab_text_1">Tyres</string>
     <string name="tab_text_2">Batteries</string>
     <string name="tab_text_3">Tubes</string>
@@ -23,4 +25,5 @@
     <string name="text_plus">+</string>
     <string name="text_minus">-</string>
     <string name="alert_negative_stocks">Stocks should be greater than 0</string>
+    <string name="tag_database">FIREBASE</string>
 </resources>

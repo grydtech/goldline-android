@@ -18,7 +18,7 @@ public class Database {
     private static final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final DatabaseReference itemsDatabase = database.getReference("item");
 
-    public static DatabaseReference getItemsDatabase() {
+    static DatabaseReference getItemsDatabase() {
         return itemsDatabase;
     }
 
@@ -31,7 +31,7 @@ public class Database {
         itemsDatabase.child(itemType).child(key).setValue(item);
     }
 
-    public static void updateItem(Item item) {
+    static void updateItem(Item item) {
         String itemType = item.getClass().getSimpleName().toLowerCase();
         String key = String.valueOf(item.hashCode());
         Map<String, Object> itemValues = item.toMap();

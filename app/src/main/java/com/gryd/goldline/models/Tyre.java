@@ -66,4 +66,25 @@ public class Tyre extends Item {
 
         return result;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Tyre tyre = (Tyre) o;
+
+        if (make != tyre.make) return false;
+        if (!size.equals(tyre.size)) return false;
+        return country.equals(tyre.country);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + size.hashCode();
+        result = 31 * result + country.hashCode();
+        return result;
+    }
 }

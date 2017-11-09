@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ItemType itemType = ItemType.valueOf(tabLayout.getSelectedTabPosition());
                 DialogFragment fragment = AddItemFragment.newInstance(itemType);
-                fragment.show(fragmentManager, "lol");
+                fragment.show(fragmentManager, getString(R.string.tag_item_fragment));
             }
         });
 
