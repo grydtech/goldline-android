@@ -2,6 +2,7 @@ package com.gryd.goldline.models;
 
 import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Map;
  * Date: 11/4/17
  */
 
-public abstract class Item {
+public abstract class Item implements Serializable {
     private String brand;
     private int stocks;
 

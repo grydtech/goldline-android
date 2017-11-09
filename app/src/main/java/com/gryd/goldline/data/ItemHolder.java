@@ -20,7 +20,7 @@ class ItemHolder extends RecyclerView.ViewHolder {
     private Button btn_plus;
     private Button btn_minus;
 
-    ItemHolder(View itemView) {
+    ItemHolder(final View itemView) {
         super(itemView);
         name = itemView.findViewById(R.id.text_item_name);
         stocks = itemView.findViewById(R.id.text_item_stocks);

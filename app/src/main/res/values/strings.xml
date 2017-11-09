@@ -20,10 +20,14 @@
     <string name="text_capacity">Capacity</string>
     <string name="text_warranty">Warranty (Y)</string>
     <string name="string_add">Add Item</string>
+    <string name="string_details">Item Details</string>
     <string name="text_stocks">Qty:</string>
     <string name="text_na">N/A</string>
     <string name="text_plus">+</string>
     <string name="text_minus">-</string>
     <string name="alert_negative_stocks">Stocks should be greater than 0</string>
     <string name="tag_database">FIREBASE</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

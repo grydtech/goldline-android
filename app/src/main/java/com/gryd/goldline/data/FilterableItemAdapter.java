@@ -81,6 +81,15 @@ public class FilterableItemAdapter<E extends Item> extends RecyclerView.Adapter<
     @Override
     public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_view, parent, false);
+
+        // Add item click listener
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Item Details", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return new ItemHolder(view);
     }
 
