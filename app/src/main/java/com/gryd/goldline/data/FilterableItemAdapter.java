@@ -1,6 +1,8 @@
 package com.gryd.goldline.data;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.Filterable;
 import android.widget.Toast;
 
 import com.gryd.goldline.R;
+import com.gryd.goldline.fragments.ItemDetailsFragment;
 import com.gryd.goldline.models.Item;
 
 import java.util.ArrayList;
@@ -81,16 +84,21 @@ public class FilterableItemAdapter<E extends Item> extends RecyclerView.Adapter<
     @Override
     public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_view, parent, false);
+        final ItemHolder holder = new ItemHolder(view);
 
+        final FragmentManager fragmentManager = ((FragmentActivity) FilterableItemAdapter.this.context).getSupportFragmentManager();
         // Add item click listener
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Item Details", Toast.LENGTH_SHORT).show();
+                ItemDetailsFragment fragment = ItemDetailsFragment.newInstance(
+                        FilterableItemAdapter.this.itemSource.get(holder.getAdapterPosition())
+                );
+                fragment.show(fragmentManager, "Item Details");
             }
         });
 
-        return new ItemHolder(view);
+        return holder;
     }
 
     @Override
