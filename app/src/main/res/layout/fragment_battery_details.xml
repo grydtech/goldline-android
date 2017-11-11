@@ -6,8 +6,6 @@
     tools:context="com.gryd.goldline.fragments.ItemDetailsFragment"
     tools:layout_editor_absoluteY="81dp">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <TextView
         android:id="@+id/lbl_brand"
         android:layout_width="wrap_content"
@@ -26,8 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="@string/text_stock"
+        android:text="@string/text_stocks"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -37,6 +36,7 @@
         android:id="@+id/lbl_capacity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/text_capacity"
@@ -48,6 +48,7 @@
         android:id="@+id/lbl_warranty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/text_warranty"
@@ -59,6 +60,7 @@
         android:id="@+id/h_sep"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="100dp"
         android:layout_marginStart="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

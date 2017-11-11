@@ -1,5 +1,6 @@
 package com.gryd.goldline.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -39,15 +40,19 @@ public class AddItemFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        // Get the view
-        final View view = getActivity().findViewById(R.id.main_content);
-        final View subView = createSubView(inflater, null);
+        Activity activity = getActivity();
+        Bundle args = getArguments();
+        if (activity == null || args == null)
+            throw new IllegalArgumentException("Activity is null");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        LayoutInflater inflater = activity.getLayoutInflater();
+
+        final View view = activity.findViewById(R.id.main_content);
+        final View subView = createSubView(inflater, (ViewGroup) view.getParent(), args);
+
         // Build the layout
-        builder.setTitle(R.string.string_add);
+        builder.setTitle(R.string.text_add_item);
         builder.setView(subView);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -93,17 +98,12 @@ public class AddItemFragment extends DialogFragment {
                         .setAction("Action", null).show();
             }
         });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Snackbar.make(view, "Canceled", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
-            }
-        });
+        builder.setNegativeButton(android.R.string.cancel, null);
         return builder.create();
     }
 
-    private View createSubView(@NonNull LayoutInflater inflater, ViewGroup container) {
-        ItemType itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
+    private View createSubView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle args) {
+        ItemType itemType = ItemType.valueOf(args.getInt("itemType", 0));
         View view;
         switch (itemType) {
             case tyre:

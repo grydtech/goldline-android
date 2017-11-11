@@ -1,35 +1,39 @@
 <resources>
+    <!--Application-->
     <string name="app_name">Goldline</string>
 
+    <!--Tags-->
+    <string name="tag_database">FIREBASE</string>
     <string name="tag_item_fragment">ITEM_FRAGMENT</string>
 
-    <string name="tab_text_1">Tyres</string>
-    <string name="tab_text_2">Batteries</string>
-    <string name="tab_text_3">Tubes</string>
+    <!--Text-->
+    <string name="text_add_item">Add Item</string>
+    <string name="text_batteries">Batteries</string>
+    <string name="text_brand">Brand</string>
+    <string name="text_capacity">Capacity</string>
+    <string name="text_country">Country</string>
+    <string name="text_delete">Delete</string>
+    <string name="text_item_details">Item Details</string>
+    <string name="text_make">Make</string>
+    <string name="text_minus">-</string>
+    <string name="text_na">N/A</string>
+    <string name="text_plus">+</string>
+    <string name="text_qty">Qty:</string>
+    <string name="text_settings">Settings</string>
+    <string name="text_size">Size</string>
+    <string name="text_stocks">Stocks</string>
+    <string name="text_sync">Sync</string>
+    <string name="text_tubes">Tubes</string>
+    <string name="text_tyres">Tyres</string>
+    <string name="text_warranty">Warranty (Y)</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="action_sync">Sync</string>
-
+    <!--Search Hints-->
     <string name="hint_search_batteries">Search Batteries</string>
     <string name="hint_search_tubes">Search Tubes</string>
     <string name="hint_search_tyres">Search Tyres</string>
-    <string name="text_brand">Brand</string>
-    <string name="text_size">Size</string>
-    <string name="text_make">Make</string>
-    <string name="text_country">Country</string>
-    <string name="text_capacity">Capacity</string>
-    <string name="text_warranty">Warranty (Y)</string>
-    <string name="string_add">Add Item</string>
-    <string name="string_details">Item Details</string>
-    <string name="text_stocks">Qty:</string>
-    <string name="text_na">N/A</string>
-    <string name="text_plus">+</string>
-    <string name="text_minus">-</string>
-    <string name="alert_negative_stocks">Stocks should be greater than 0</string>
-    <string name="tag_database">FIREBASE</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="txt_delete">Delete</string>
-    <string name="text_stock">Stocks</string>
+    <!--Alert messages-->
+    <string name="alert_negative_stocks">Stocks should be greater than 0</string>
+    <string name="alert_item_deleted">Item deleted successfully</string>
+
 </resources>

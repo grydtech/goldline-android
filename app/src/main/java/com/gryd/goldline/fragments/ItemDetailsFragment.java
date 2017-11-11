@@ -1,5 +1,6 @@
 package com.gryd.goldline.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,47 +35,44 @@ public class ItemDetailsFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        // Item object
-        final Item item = (Item) getArguments().getSerializable("item");
-        // Title
-        builder.setTitle(R.string.string_details);
-        // Item details
-        builder.setView(createItemDetailsView(inflater, item));
-        // Delete button
-        builder.setNegativeButton(R.string.txt_delete, new DialogInterface.OnClickListener() {
+        Activity activity = getActivity();
+        Bundle args = getArguments();
+        if (activity == null || args == null)
+            throw new IllegalArgumentException("Activity is null");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        final Item item = (Item) args.getSerializable("item");
+        final View view = activity.findViewById(R.id.main_content);
+        final View subView = createItemDetailsView(inflater, (ViewGroup) view.getParent(), item);
+
+        // Build the layout
+        builder.setTitle(R.string.text_item_details);
+        builder.setView(subView);
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.setNegativeButton(R.string.text_delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Database.removeItem(item);
-                Toast.makeText(getContext(), "Item deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.alert_item_deleted, Toast.LENGTH_SHORT).show();
             }
         });
-        // Close button
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // Do Nothing and close
-            }
-        });
-        // Build the layout
         return builder.create();
     }
 
-    private View createItemDetailsView(@NonNull LayoutInflater inflater, Item item) {
+    private View createItemDetailsView(@NonNull LayoutInflater inflater, ViewGroup container, Item item) {
         ItemType itemType = ItemType.valueOf(item.getClass().getSimpleName().toLowerCase());
         TextView brand, stocks, size, make, country, capacity, warranty;
         View view;
         // Assign value to view object
         switch (itemType) {
             case tyre:
-                view = inflater.inflate(R.layout.fragment_tyre_details, null, false);
+                view = inflater.inflate(R.layout.fragment_tyre_details, container, false);
                 break;
             case battery:
-                view = inflater.inflate(R.layout.fragment_battery_details, null, false);
+                view = inflater.inflate(R.layout.fragment_battery_details, container, false);
                 break;
             case tube:
-                view = inflater.inflate(R.layout.fragment_tube_details, null, false);
+                view = inflater.inflate(R.layout.fragment_tube_details, container, false);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid Item Type");

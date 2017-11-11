@@ -92,7 +92,7 @@ public class FilterableItemAdapter<E extends Item> extends RecyclerView.Adapter<
             @Override
             public void onClick(View view) {
                 ItemDetailsFragment fragment = ItemDetailsFragment.newInstance(
-                        FilterableItemAdapter.this.itemSource.get(holder.getAdapterPosition())
+                        FilterableItemAdapter.this.items.get(holder.getAdapterPosition())
                 );
                 fragment.show(fragmentManager, "Item Details");
             }
