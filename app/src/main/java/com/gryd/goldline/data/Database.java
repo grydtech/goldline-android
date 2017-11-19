@@ -15,9 +15,15 @@ import java.util.Map;
 
 public class Database {
     // Write a message to the database
-    private static final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private static final DatabaseReference itemsDatabase = database.getReference("item");
+    private static final FirebaseDatabase database;
+    private static final DatabaseReference itemsDatabase;
 
+    static {
+        database = FirebaseDatabase.getInstance();
+        database.setPersistenceEnabled(true);
+        itemsDatabase = database.getReference("item");
+
+    }
     static DatabaseReference getItemsDatabase() {
         return itemsDatabase;
     }

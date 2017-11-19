@@ -7,18 +7,18 @@
     tools:context="com.gryd.goldline.fragments.AddItemFragment">
 
     <TextView
-        android:id="@+id/textView_brand"
+        android:id="@+id/lbl_brand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:text="@string/text_brand"
-        app:layout_constraintBaseline_toBaselineOf="@+id/text_brand"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txt_brand"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/text_brand"
+    <AutoCompleteTextView
+        android:id="@+id/txt_brand"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -29,23 +29,23 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_size"
+        app:layout_constraintStart_toEndOf="@+id/lbl_size"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_size"
+        android:id="@+id/lbl_size"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:text="@string/text_size"
-        app:layout_constraintBaseline_toBaselineOf="@+id/text_dimension"
-        app:layout_constraintEnd_toEndOf="@+id/textView_brand"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txt_size"
+        app:layout_constraintEnd_toEndOf="@+id/lbl_brand"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/text_dimension"
+    <AutoCompleteTextView
+        android:id="@+id/txt_size"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -56,7 +56,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_size"
-        app:layout_constraintTop_toBottomOf="@+id/text_brand" />
+        app:layout_constraintStart_toEndOf="@+id/lbl_size"
+        app:layout_constraintTop_toBottomOf="@+id/txt_brand"
+        tools:ignore="TextFields" />
 
 </android.support.constraint.ConstraintLayout>

@@ -13,7 +13,9 @@ import com.gryd.goldline.models.Tube;
 import com.gryd.goldline.models.Tyre;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created By: Yasith Jayawardana
@@ -25,11 +27,23 @@ public final class DataSet {
 
     // Declare items and adapters
     private static final DataSet dataSet = new DataSet();
+    private static final ArrayList<String> countries = new ArrayList<>();
+
+    static {
+        for (Locale l :
+                Locale.getAvailableLocales()) {
+            String country = l.getDisplayCountry();
+            if (country.length() > 0 && !countries.contains(country)) {
+                countries.add(country);
+            }
+        }
+        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
+    }
+
     private final ArrayList<Tyre> tyres = new ArrayList<>();
     private final ArrayList<Battery> batteries = new ArrayList<>();
     private final ArrayList<Tube> tubes = new ArrayList<>();
     private final ArrayList<FilterableItemAdapter> adapters = new ArrayList<>();
-
     private DataSet() {
         // Add listener to update data arrays on database changes
         Database.getItemsDatabase().addValueEventListener(new ValueEventListener() {
@@ -70,6 +84,10 @@ public final class DataSet {
                 Log.w(this.getClass().getSimpleName(), "Failed to read value.", error.toException());
             }
         });
+    }
+
+    public static ArrayList<String> getCountries() {
+        return countries;
     }
 
     public static DataSet getInstance() {

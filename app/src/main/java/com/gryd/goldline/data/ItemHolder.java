@@ -22,10 +22,10 @@ class ItemHolder extends RecyclerView.ViewHolder {
 
     ItemHolder(final View itemView) {
         super(itemView);
-        name = itemView.findViewById(R.id.text_item_name);
-        stocks = itemView.findViewById(R.id.text_item_stocks);
-        btn_plus = itemView.findViewById(R.id.button_plus);
-        btn_minus = itemView.findViewById(R.id.button_minus);
+        name = itemView.findViewById(R.id.txt_name);
+        stocks = itemView.findViewById(R.id.txt_stocks);
+        btn_plus = itemView.findViewById(R.id.btn_plus);
+        btn_minus = itemView.findViewById(R.id.btn_minus);
     }
 
     void IncreaseStocks(int qty) {

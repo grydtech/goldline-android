@@ -38,6 +38,7 @@ public class FilterableItemAdapter<E extends Item> extends RecyclerView.Adapter<
         this.itemSource = source_items;
         this.items = new ArrayList<>(source_items);
         filter = new Filter() {
+
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();

@@ -2,6 +2,7 @@ package com.gryd.goldline.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,15 +12,21 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.gryd.goldline.R;
+import com.gryd.goldline.data.DataSet;
 import com.gryd.goldline.data.Database;
 import com.gryd.goldline.models.Battery;
 import com.gryd.goldline.models.Item;
 import com.gryd.goldline.models.ItemType;
 import com.gryd.goldline.models.Tube;
 import com.gryd.goldline.models.Tyre;
+
+import java.util.ArrayList;
 
 /**
  * Created By: Yasith Jayawardana
@@ -41,15 +48,16 @@ public class AddItemFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Activity activity = getActivity();
+        Context context = getContext();
         Bundle args = getArguments();
-        if (activity == null || args == null)
-            throw new IllegalArgumentException("Activity is null");
+        if (activity == null || args == null || context == null)
+            throw new IllegalArgumentException("Activity/Context is null");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
 
         final View view = activity.findViewById(R.id.main_content);
-        final View subView = createSubView(inflater, (ViewGroup) view.getParent(), args);
+        final View subView = createSubView(activity, inflater, (ViewGroup) view.getParent(), args);
 
         // Build the layout
         builder.setTitle(R.string.text_add_item);
@@ -57,12 +65,12 @@ public class AddItemFragment extends DialogFragment {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // Variables
-                EditText brand = subView.findViewById(R.id.text_brand);
-                EditText dimension = subView.findViewById(R.id.text_dimension);
-                EditText country = subView.findViewById(R.id.text_country);
-                EditText make = subView.findViewById(R.id.text_make);
-                EditText capacity = subView.findViewById(R.id.text_capacity);
-                EditText warranty = subView.findViewById(R.id.text_warranty);
+                AutoCompleteTextView brand = subView.findViewById(R.id.txt_brand);
+                AutoCompleteTextView size = subView.findViewById(R.id.txt_size);
+                Spinner country = subView.findViewById(R.id.txt_country);
+                EditText make = subView.findViewById(R.id.txt_make);
+                EditText capacity = subView.findViewById(R.id.txt_capacity);
+                EditText warranty = subView.findViewById(R.id.txt_warranty);
 
                 // Generate Item Object
                 ItemType itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
@@ -71,9 +79,9 @@ public class AddItemFragment extends DialogFragment {
                     case tyre:
                         Tyre tyre = new Tyre();
                         tyre.setBrand(brand.getText().toString());
-                        tyre.setCountry(country.getText().toString());
+                        tyre.setCountry(country.getSelectedItem().toString());
                         tyre.setMake(Integer.parseInt(make.getText().toString()));
-                        tyre.setSize(dimension.getText().toString());
+                        tyre.setSize(size.getText().toString());
                         tyre.setStocks(0);
                         item = tyre;
                         break;
@@ -88,7 +96,7 @@ public class AddItemFragment extends DialogFragment {
                     case tube:
                         Tube tube = new Tube();
                         tube.setBrand(brand.getText().toString());
-                        tube.setSize(dimension.getText().toString());
+                        tube.setSize(size.getText().toString());
                         tube.setStocks(0);
                         item = tube;
                         break;
@@ -102,12 +110,16 @@ public class AddItemFragment extends DialogFragment {
         return builder.create();
     }
 
-    private View createSubView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle args) {
+    private View createSubView(@NonNull Context context, @NonNull LayoutInflater inflater, ViewGroup container, Bundle args) {
         ItemType itemType = ItemType.valueOf(args.getInt("itemType", 0));
         View view;
         switch (itemType) {
             case tyre:
                 view = inflater.inflate(R.layout.fragment_tyre_add, container, false);
+                Spinner country = view.findViewById(R.id.txt_country);
+                ArrayList<String> countries = DataSet.getCountries();
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, countries);
+                country.setAdapter(adapter);
                 break;
             case battery:
                 view = inflater.inflate(R.layout.fragment_battery_add, container, false);
