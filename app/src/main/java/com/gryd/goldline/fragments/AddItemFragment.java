@@ -9,12 +9,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.gryd.goldline.R;
@@ -26,7 +26,7 @@ import com.gryd.goldline.models.ItemType;
 import com.gryd.goldline.models.Tube;
 import com.gryd.goldline.models.Tyre;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created By: Yasith Jayawardana
@@ -46,9 +46,9 @@ public class AddItemFragment extends DialogFragment {
 
     @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
         Activity activity = getActivity();
-        Context context = getContext();
+        final Context context = getContext();
         Bundle args = getArguments();
         if (activity == null || args == null || context == null)
             throw new IllegalArgumentException("Activity/Context is null");
@@ -64,16 +64,19 @@ public class AddItemFragment extends DialogFragment {
         builder.setView(subView);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+
+                // Item Type
+                ItemType itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
+
                 // Variables
                 AutoCompleteTextView brand = subView.findViewById(R.id.txt_brand);
                 AutoCompleteTextView size = subView.findViewById(R.id.txt_size);
+                AutoCompleteTextView make = subView.findViewById(R.id.txt_make);
+                AutoCompleteTextView capacity = subView.findViewById(R.id.txt_capacity);
+                AutoCompleteTextView warranty = subView.findViewById(R.id.txt_warranty);
                 Spinner country = subView.findViewById(R.id.txt_country);
-                EditText make = subView.findViewById(R.id.txt_make);
-                EditText capacity = subView.findViewById(R.id.txt_capacity);
-                EditText warranty = subView.findViewById(R.id.txt_warranty);
 
                 // Generate Item Object
-                ItemType itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
                 Item item = null;
                 switch (itemType) {
                     case tyre:
@@ -98,7 +101,7 @@ public class AddItemFragment extends DialogFragment {
                             battery.setCapacity(Integer.valueOf(batteryCapacity));
                         }
                         // Battery Warranty
-                        String batteryWarranty = capacity.getText().toString();
+                        String batteryWarranty = warranty.getText().toString();
                         if (!batteryWarranty.isEmpty()) {
                             battery.setWarranty(Integer.valueOf(batteryWarranty));
                         }
@@ -125,11 +128,13 @@ public class AddItemFragment extends DialogFragment {
     private View createSubView(@NonNull Context context, @NonNull LayoutInflater inflater, ViewGroup container, Bundle args) {
         ItemType itemType = ItemType.valueOf(args.getInt("itemType", 0));
         View view;
+
         switch (itemType) {
             case tyre:
                 view = inflater.inflate(R.layout.fragment_tyre_add, container, false);
+                // Set spinner data
                 Spinner country = view.findViewById(R.id.txt_country);
-                ArrayList<String> countries = DataSet.getCountries();
+                List<String> countries = DataSet.getCountries();
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, countries);
                 country.setAdapter(adapter);
                 break;
@@ -142,6 +147,33 @@ public class AddItemFragment extends DialogFragment {
             default:
                 throw new IllegalArgumentException("Invalid Item Type");
         }
+
+        // Set auto completion for brands
+        AutoCompleteTextView brandTextEdit = view.findViewById(R.id.txt_brand);
+        if (brandTextEdit != null) {
+            brandTextEdit.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+            brandTextEdit.setThreshold(1);
+            List<String> brands = DataSet.getBrands(itemType);
+            if (brands != null) {
+                brandTextEdit.setAdapter(new ArrayAdapter<>(
+                        context, android.R.layout.simple_spinner_dropdown_item, brands
+                ));
+            }
+        }
+
+        // Set auto completion for sizes
+        AutoCompleteTextView sizeTextEdit = view.findViewById(R.id.txt_size);
+        if (sizeTextEdit != null) {
+            sizeTextEdit.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+            sizeTextEdit.setThreshold(1);
+            List<String> sizes = DataSet.getSizes(itemType);
+            if (sizes != null) {
+                sizeTextEdit.setAdapter(new ArrayAdapter<>(
+                        context, android.R.layout.simple_spinner_dropdown_item, sizes
+                ));
+            }
+        }
+
         return view;
     }
 }

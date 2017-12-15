@@ -37,8 +37,11 @@ public class ItemFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ItemType itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
-
+        // Item Type
+        ItemType itemType = ItemType.valueOf(0);
+        if (getArguments() != null) {
+            itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
+        }
         // Inflate the view
         View view;
         switch (itemType) {

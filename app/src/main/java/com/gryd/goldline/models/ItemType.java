@@ -12,7 +12,7 @@ public enum ItemType {
 
     tyre(0), battery(1), tube(2);
 
-    private static SparseArray<ItemType> map = new SparseArray<>();
+    private static final SparseArray<ItemType> map = new SparseArray<>();
 
     static {
         for (ItemType itemType : ItemType.values()) {

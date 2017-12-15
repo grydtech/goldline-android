@@ -15,10 +15,10 @@ import com.gryd.goldline.R;
 
 class ItemHolder extends RecyclerView.ViewHolder {
 
-    TextView name;
-    TextView stocks;
-    private Button btn_plus;
-    private Button btn_minus;
+    final TextView name;
+    final TextView stocks;
+    private final Button btn_plus;
+    private final Button btn_minus;
 
     ItemHolder(final View itemView) {
         super(itemView);
@@ -26,20 +26,6 @@ class ItemHolder extends RecyclerView.ViewHolder {
         stocks = itemView.findViewById(R.id.txt_stocks);
         btn_plus = itemView.findViewById(R.id.btn_plus);
         btn_minus = itemView.findViewById(R.id.btn_minus);
-    }
-
-    void IncreaseStocks(int qty) {
-        int prev_qty = Integer.parseInt(stocks.getText().toString());
-        int new_qty = prev_qty + qty;
-        stocks.setText(String.valueOf(new_qty));
-    }
-
-    void DecreaseStocks(int qty) {
-        int prev_qty = Integer.parseInt(stocks.getText().toString());
-        int new_qty = prev_qty - qty;
-        if (new_qty >= 0) {
-            stocks.setText(String.valueOf(new_qty));
-        }
     }
 
     void setOnPlusClickListener(View.OnClickListener listener) {

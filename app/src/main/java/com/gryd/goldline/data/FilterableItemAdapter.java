@@ -29,8 +29,8 @@ public class FilterableItemAdapter<E extends Item> extends RecyclerView.Adapter<
 
     private final Context context;
     private final Filter filter;
-    private List<E> items;
-    private List<E> itemSource;
+    private final List<E> items;
+    private final List<E> itemSource;
     private String search_text;
 
     FilterableItemAdapter(Context context, List<E> source_items) {

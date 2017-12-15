@@ -13,7 +13,7 @@ import com.gryd.goldline.models.ItemType;
  * Date: 11/4/17
  */
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     SectionsPagerAdapter(FragmentManager fm) {
         super(fm);

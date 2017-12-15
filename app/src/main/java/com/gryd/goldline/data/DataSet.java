@@ -13,9 +13,9 @@ import com.gryd.goldline.models.Tube;
 import com.gryd.goldline.models.Tyre;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created By: Yasith Jayawardana
@@ -25,36 +25,127 @@ import java.util.Locale;
 
 public final class DataSet {
 
-    // Declare items and adapters
-    private static final DataSet dataSet = new DataSet();
-    private static final ArrayList<String> countries = new ArrayList<>();
+    // Default Countries
+    private static final String[] defaultCountries = {
+            "CHINA",
+            "EUROPE",
+            "GERMANY",
+            "INDIA",
+            "INDONESIA",
+            "JAPAN",
+            "KOREA",
+            "MALAYSIA",
+            "SRI LANKA",
+            "TAIWAN",
+            "THAILAND",
+            "UK",
+            "VIETNAM"
+    };
+
+    // Default Brands
+    private static final String[] defaultTyreBrands = {
+            "HANKOOK",
+            "KUMHO",
+            "SONAR",
+            "EVENT",
+            "GT",
+            "DUNLOP",
+            "BRIDGESTONE",
+            "CEAT",
+            "NANKANG",
+            "GOODYEAR",
+            "MICHELIN",
+            "TOYO",
+            "HIFLY",
+            "CONTINENTAL",
+            "ACHILLES"
+    };
+    private static final String[] defaultBatteryBrands = {
+            "EXIDE"
+    };
+    private static final String[] defaultTubeBrands = {
+            "CST"
+    };
+
+    // Default Sizes
+    private static final String[] defaultTyreSizes = {
+            "135/70/12",
+            "145/70/12",
+            "145/80/12",
+            "155/65/12",
+            "155/80/12",
+            "155/65/13",
+            "155/80/13",
+            "165/80/13",
+            "185/70/13",
+            "165/70/14",
+            "175/70/13",
+            "175/70/14",
+            "185/70/14",
+            "185/65/14",
+            "215/75/15",
+            "235/75/15",
+            "235/75/16",
+            "195/65/15",
+            "165/55/14",
+            "185/65/15",
+            "165/60/14",
+            "175/65/15"
+    };
+    private static final String[] defaultTubeSizes = {
+            "26x1 1/2",
+            "26x1 3/8",
+            "28x1 1/2"
+    };
+    private static final DataSet dataSet;
+    private static final List<String> countries;
+    // Brands
+    private static final List<String> tyreBrands;
+    private static final List<String> batteryBrands;
+    private static final List<String> tubeBrands;
+    // Sizes
+    private static final List<String> tyreSizes;
+    private static final List<String> tubeSizes;
 
     static {
-        for (Locale l :
-                Locale.getAvailableLocales()) {
-            String country = l.getDisplayCountry();
-            if (country.length() > 0 && !countries.contains(country)) {
-                countries.add(country);
-            }
-        }
-        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
+        dataSet = new DataSet();
+        countries = Arrays.asList(defaultCountries);
+        Collections.sort(countries);
+        // Brands
+        batteryBrands = Arrays.asList(defaultBatteryBrands);
+        Collections.sort(batteryBrands);
+        tubeBrands = Arrays.asList(defaultTubeBrands);
+        Collections.sort(tubeBrands);
+        tyreBrands = Arrays.asList(defaultTyreBrands);
+        Collections.sort(tyreBrands);
+        // Sizes
+        tubeSizes = Arrays.asList(defaultTubeSizes);
+        Collections.sort(tubeSizes);
+        tyreSizes = Arrays.asList(defaultTyreSizes);
+        Collections.sort(tyreSizes);
     }
 
     private final ArrayList<Tyre> tyres = new ArrayList<>();
     private final ArrayList<Battery> batteries = new ArrayList<>();
     private final ArrayList<Tube> tubes = new ArrayList<>();
     private final ArrayList<FilterableItemAdapter> adapters = new ArrayList<>();
+
     private DataSet() {
         // Add listener to update data arrays on database changes
         Database.getItemsDatabase().addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                // Populate data arrays with new values
+
+                // Clear all data arrays first
+                clearList(ItemType.tyre);
+                clearList(ItemType.battery);
+                clearList(ItemType.tube);
+
+                // Populate data arrays with new data
                 for (DataSnapshot ds : snapshot.getChildren()) {
+                    // Each direct child specifies an item type
                     ItemType itemType = ItemType.valueOf(ds.getKey());
-                    // Clear array of items
-                    clearList(itemType);
                     for (DataSnapshot dataSnapshot : ds.getChildren()) {
                         Item item;
                         switch (itemType) {
@@ -86,8 +177,33 @@ public final class DataSet {
         });
     }
 
-    public static ArrayList<String> getCountries() {
+    public static List<String> getCountries() {
         return countries;
+    }
+
+    public static List<String> getBrands(ItemType itemType) {
+        switch (itemType) {
+            case tyre:
+                return tyreBrands;
+            case battery:
+                return batteryBrands;
+            case tube:
+                return tubeBrands;
+            default:
+                return null;
+        }
+    }
+
+    public static List<String> getSizes(ItemType itemType) {
+        switch (itemType) {
+
+            case tyre:
+                return tyreSizes;
+            case tube:
+                return tubeSizes;
+            default:
+                return null;
+        }
     }
 
     public static DataSet getInstance() {
@@ -129,19 +245,6 @@ public final class DataSet {
             case tube:
                 tubes.clear();
                 break;
-            default:
-                throw new IllegalArgumentException("Not a valid enum value for ItemType");
-        }
-    }
-
-    private List<? extends Item> getList(ItemType itemType) {
-        switch (itemType) {
-            case tyre:
-                return tyres;
-            case battery:
-                return batteries;
-            case tube:
-                return tubes;
             default:
                 throw new IllegalArgumentException("Not a valid enum value for ItemType");
         }
