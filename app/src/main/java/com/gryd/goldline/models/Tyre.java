@@ -15,7 +15,7 @@ import java.util.Map;
 public class Tyre extends Item {
     private String size;
     private String country;
-    private int make;
+    private Integer make;
 
     public String getSize() {
         return size;
@@ -33,11 +33,11 @@ public class Tyre extends Item {
         this.country = country;
     }
 
-    public int getMake() {
+    public Integer getMake() {
         return make;
     }
 
-    public void setMake(int make) {
+    public void setMake(Integer make) {
         this.make = make;
     }
 
@@ -45,11 +45,11 @@ public class Tyre extends Item {
     public String toString() {
         return String.format(
                 Locale.getDefault(),
-                "%s %s (%s) %d",
+                "%s %s (%s) %s",
                 getBrand(),
                 getSize(),
                 getCountry(),
-                getMake()
+                getMake() != null ? getMake() : ""
         );
     }
 
@@ -75,9 +75,10 @@ public class Tyre extends Item {
 
         Tyre tyre = (Tyre) o;
 
-        if (make != tyre.make) return false;
-        if (!size.equals(tyre.size)) return false;
-        return country.equals(tyre.country);
+
+        return String.valueOf(this.make).equals(String.valueOf(tyre.make))
+                && this.size.equals(tyre.size)
+                && this.country.equals(tyre.country);
     }
 
     @Override

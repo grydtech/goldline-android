@@ -80,7 +80,11 @@ public class AddItemFragment extends DialogFragment {
                         Tyre tyre = new Tyre();
                         tyre.setBrand(brand.getText().toString());
                         tyre.setCountry(country.getSelectedItem().toString());
-                        tyre.setMake(Integer.parseInt(make.getText().toString()));
+                        // Tyre Make
+                        String tyreMake = make.getText().toString();
+                        if (!tyreMake.isEmpty()) {
+                            tyre.setMake(Integer.valueOf(tyreMake));
+                        }
                         tyre.setSize(size.getText().toString());
                         tyre.setStocks(0);
                         item = tyre;
@@ -88,8 +92,16 @@ public class AddItemFragment extends DialogFragment {
                     case battery:
                         Battery battery = new Battery();
                         battery.setBrand(brand.getText().toString());
-                        battery.setCapacity(Integer.parseInt(capacity.getText().toString()));
-                        battery.setWarranty(Integer.parseInt(warranty.getText().toString()));
+                        // Battery Capacity
+                        String batteryCapacity = capacity.getText().toString();
+                        if (!batteryCapacity.isEmpty()) {
+                            battery.setCapacity(Integer.valueOf(batteryCapacity));
+                        }
+                        // Battery Warranty
+                        String batteryWarranty = capacity.getText().toString();
+                        if (!batteryWarranty.isEmpty()) {
+                            battery.setWarranty(Integer.valueOf(batteryWarranty));
+                        }
                         battery.setStocks(0);
                         item = battery;
                         break;

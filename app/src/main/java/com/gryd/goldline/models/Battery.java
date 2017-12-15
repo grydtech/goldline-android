@@ -13,23 +13,23 @@ import java.util.Map;
  */
 
 public class Battery extends Item {
-    private int capacity;
-    private int warranty;
+    private Integer capacity;
+    private Integer warranty;
 
 
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 
-    public int getWarranty() {
+    public Integer getWarranty() {
         return warranty;
     }
 
-    public void setWarranty(int warranty) {
+    public void setWarranty(Integer warranty) {
         this.warranty = warranty;
     }
 
@@ -37,10 +37,10 @@ public class Battery extends Item {
     public String toString() {
         return String.format(
                 Locale.getDefault(),
-                "%s %d (%dY)",
+                "%s %s (%sY)",
                 getBrand(),
-                getCapacity(),
-                getWarranty()
+                getCapacity() != null ? getCapacity() : "",
+                getWarranty() != null ? getWarranty() : ""
         );
     }
 
@@ -64,8 +64,7 @@ public class Battery extends Item {
         if (!super.equals(o)) return false;
 
         Battery battery = (Battery) o;
-
-        return capacity == battery.capacity;
+        return String.valueOf(this.capacity).equals(String.valueOf(battery.capacity));
     }
 
     @Override
