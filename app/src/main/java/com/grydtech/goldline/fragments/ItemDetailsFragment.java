@@ -1,25 +1,24 @@
-package com.gryd.goldline.fragments;
+package com.grydtech.goldline.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.gryd.goldline.R;
-import com.gryd.goldline.data.Database;
-import com.gryd.goldline.models.Battery;
-import com.gryd.goldline.models.Item;
-import com.gryd.goldline.models.ItemType;
-import com.gryd.goldline.models.Tube;
-import com.gryd.goldline.models.Tyre;
+import com.grydtech.goldline.R;
+import com.grydtech.goldline.data.Database;
+import com.grydtech.goldline.models.Battery;
+import com.grydtech.goldline.models.Item;
+import com.grydtech.goldline.models.ItemType;
+import com.grydtech.goldline.models.Tube;
+import com.grydtech.goldline.models.Tyre;
 
 
 public class ItemDetailsFragment extends DialogFragment {
@@ -44,18 +43,26 @@ public class ItemDetailsFragment extends DialogFragment {
         LayoutInflater inflater = activity.getLayoutInflater();
         final Item item = (Item) args.getSerializable("item");
         final View view = activity.findViewById(R.id.main_content);
-        final View subView = createItemDetailsView(inflater, (ViewGroup) view.getParent(), item);
 
         // Build the layout
         builder.setTitle(R.string.text_item_details);
-        builder.setView(subView);
         builder.setPositiveButton(android.R.string.ok, null);
-        builder.setNegativeButton(R.string.text_delete, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Database.removeItem(item);
-                Toast.makeText(getContext(), R.string.alert_item_deleted, Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        if (item != null) {
+            final View subView = createItemDetailsView(inflater, (ViewGroup) view.getParent(), item);
+            builder.setView(subView);
+            builder.setNegativeButton(R.string.text_delete, (dialog, id) -> {
+                // Show confirmation dialog for action
+                Database.removeItem(item).addOnSuccessListener(task ->
+                        Snackbar.make(view, "Item Removed Successfully", Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show()
+                ).addOnFailureListener(task ->
+                        Snackbar.make(view, "Item Could not be Removed", Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show()
+                );
+            });
+        }
+
         return builder.create();
     }
 

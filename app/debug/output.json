@@ -10,7 +10,7 @@
     },
     "path": "app-debug.apk",
     "properties": {
-      "packageId": "com.gryd.goldline",
+      "packageId": "com.grydtech.goldline",
       "split": "",
       "minSdkVersion": "15"
     }

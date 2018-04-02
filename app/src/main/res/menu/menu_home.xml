@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.gryd.goldline.HomeActivity">
+    tools:context="com.grydtech.goldline.HomeActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

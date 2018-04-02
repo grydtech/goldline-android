@@ -1,4 +1,4 @@
-package com.gryd.goldline.models;
+package com.grydtech.goldline.models;
 
 import com.google.firebase.database.Exclude;
 

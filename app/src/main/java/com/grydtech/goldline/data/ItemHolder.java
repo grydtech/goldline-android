@@ -1,11 +1,11 @@
-package com.gryd.goldline.data;
+package com.grydtech.goldline.data;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.gryd.goldline.R;
+import com.grydtech.goldline.R;
 
 /**
  * Created By: Yasith Jayawardana

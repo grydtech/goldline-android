@@ -4,7 +4,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gryd.goldline.fragments.ItemFragment">
+    tools:context="com.grydtech.goldline.fragments.ItemFragment">
 
     <android.support.v7.widget.SearchView
         android:id="@+id/search_bar"

@@ -1,4 +1,4 @@
-package com.gryd.goldline.data;
+package com.grydtech.goldline.data;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,11 +6,11 @@ import android.util.Log;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.gryd.goldline.models.Battery;
-import com.gryd.goldline.models.Item;
-import com.gryd.goldline.models.ItemType;
-import com.gryd.goldline.models.Tube;
-import com.gryd.goldline.models.Tyre;
+import com.grydtech.goldline.models.Battery;
+import com.grydtech.goldline.models.Item;
+import com.grydtech.goldline.models.ItemType;
+import com.grydtech.goldline.models.Tube;
+import com.grydtech.goldline.models.Tyre;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -125,9 +125,9 @@ public final class DataSet {
         Collections.sort(tyreSizes);
     }
 
-    private final ArrayList<Tyre> tyres = new ArrayList<>();
-    private final ArrayList<Battery> batteries = new ArrayList<>();
-    private final ArrayList<Tube> tubes = new ArrayList<>();
+    private final ArrayList<Item> tyres = new ArrayList<>();
+    private final ArrayList<Item> batteries = new ArrayList<>();
+    private final ArrayList<Item> tubes = new ArrayList<>();
     private final ArrayList<FilterableItemAdapter> adapters = new ArrayList<>();
 
     private DataSet() {
@@ -161,7 +161,7 @@ public final class DataSet {
                             default:
                                 throw new IllegalArgumentException("Not a valid Item type");
                         }
-                        addItem(item);
+                        if (item != null) addItem(item);
                     }
                 }
                 // Notify adapters
@@ -210,18 +210,18 @@ public final class DataSet {
         return dataSet;
     }
 
-    public FilterableItemAdapter<? extends Item> getAdapter(Context context, ItemType itemType) {
-        FilterableItemAdapter<? extends Item> adapter;
+    public FilterableItemAdapter getAdapter(Context context, ItemType itemType) {
+        FilterableItemAdapter adapter;
 
         switch (itemType) {
             case tyre:
-                adapter = new FilterableItemAdapter<>(context, tyres);
+                adapter = new FilterableItemAdapter(context, tyres);
                 break;
             case battery:
-                adapter = new FilterableItemAdapter<>(context, batteries);
+                adapter = new FilterableItemAdapter(context, batteries);
                 break;
             case tube:
-                adapter = new FilterableItemAdapter<>(context, tubes);
+                adapter = new FilterableItemAdapter(context, tubes);
                 break;
             default:
                 throw new IllegalArgumentException("Not a valid Item Type");
@@ -254,13 +254,13 @@ public final class DataSet {
         ItemType itemType = ItemType.valueOf(item.getClass().getSimpleName().toLowerCase());
         switch (itemType) {
             case tyre:
-                tyres.add((Tyre) item);
+                tyres.add(item);
                 break;
             case battery:
-                batteries.add((Battery) item);
+                batteries.add(item);
                 break;
             case tube:
-                tubes.add((Tube) item);
+                tubes.add(item);
                 break;
         }
     }

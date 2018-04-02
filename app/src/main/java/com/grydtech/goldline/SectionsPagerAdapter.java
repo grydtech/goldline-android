@@ -1,11 +1,11 @@
-package com.gryd.goldline;
+package com.grydtech.goldline;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.gryd.goldline.fragments.ItemFragment;
-import com.gryd.goldline.models.ItemType;
+import com.grydtech.goldline.fragments.ItemFragment;
+import com.grydtech.goldline.models.ItemType;
 
 /**
  * Created By: Yasith Jayawardana

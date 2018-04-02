@@ -1,4 +1,4 @@
-package com.gryd.goldline;
+package com.grydtech.goldline;
 
 import org.junit.Test;
 

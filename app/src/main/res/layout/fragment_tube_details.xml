@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.gryd.goldline.fragments.ItemDetailsFragment"
+    tools:context="com.grydtech.goldline.fragments.ItemDetailsFragment"
     tools:layout_editor_absoluteY="81dp">
 
     <TextView

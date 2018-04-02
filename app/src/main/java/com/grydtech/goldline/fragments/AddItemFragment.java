@@ -1,9 +1,8 @@
-package com.gryd.goldline.fragments;
+package com.grydtech.goldline.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -17,14 +16,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
-import com.gryd.goldline.R;
-import com.gryd.goldline.data.DataSet;
-import com.gryd.goldline.data.Database;
-import com.gryd.goldline.models.Battery;
-import com.gryd.goldline.models.Item;
-import com.gryd.goldline.models.ItemType;
-import com.gryd.goldline.models.Tube;
-import com.gryd.goldline.models.Tyre;
+import com.grydtech.goldline.R;
+import com.grydtech.goldline.data.DataSet;
+import com.grydtech.goldline.data.Database;
+import com.grydtech.goldline.models.Battery;
+import com.grydtech.goldline.models.Item;
+import com.grydtech.goldline.models.ItemType;
+import com.grydtech.goldline.models.Tube;
+import com.grydtech.goldline.models.Tyre;
 
 import java.util.List;
 
@@ -62,64 +61,69 @@ public class AddItemFragment extends DialogFragment {
         // Build the layout
         builder.setTitle(R.string.text_add_item);
         builder.setView(subView);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
+        builder.setPositiveButton(android.R.string.ok, (dialog, id) -> {
 
-                // Item Type
-                ItemType itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
+            // Item Type
+            ItemType itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
 
-                // Variables
-                AutoCompleteTextView brand = subView.findViewById(R.id.txt_brand);
-                AutoCompleteTextView size = subView.findViewById(R.id.txt_size);
-                AutoCompleteTextView make = subView.findViewById(R.id.txt_make);
-                AutoCompleteTextView capacity = subView.findViewById(R.id.txt_capacity);
-                AutoCompleteTextView warranty = subView.findViewById(R.id.txt_warranty);
-                Spinner country = subView.findViewById(R.id.txt_country);
+            // Variables
+            AutoCompleteTextView brand = subView.findViewById(R.id.txt_brand);
+            AutoCompleteTextView size = subView.findViewById(R.id.txt_size);
+            AutoCompleteTextView make = subView.findViewById(R.id.txt_make);
+            AutoCompleteTextView capacity = subView.findViewById(R.id.txt_capacity);
+            AutoCompleteTextView warranty = subView.findViewById(R.id.txt_warranty);
+            Spinner country = subView.findViewById(R.id.txt_country);
 
-                // Generate Item Object
-                Item item = null;
-                switch (itemType) {
-                    case tyre:
-                        Tyre tyre = new Tyre();
-                        tyre.setBrand(brand.getText().toString());
-                        tyre.setCountry(country.getSelectedItem().toString());
-                        // Tyre Make
-                        String tyreMake = make.getText().toString();
-                        if (!tyreMake.isEmpty()) {
-                            tyre.setMake(Integer.valueOf(tyreMake));
-                        }
-                        tyre.setSize(size.getText().toString());
-                        tyre.setStocks(0);
-                        item = tyre;
-                        break;
-                    case battery:
-                        Battery battery = new Battery();
-                        battery.setBrand(brand.getText().toString());
-                        // Battery Capacity
-                        String batteryCapacity = capacity.getText().toString();
-                        if (!batteryCapacity.isEmpty()) {
-                            battery.setCapacity(Integer.valueOf(batteryCapacity));
-                        }
-                        // Battery Warranty
-                        String batteryWarranty = warranty.getText().toString();
-                        if (!batteryWarranty.isEmpty()) {
-                            battery.setWarranty(Integer.valueOf(batteryWarranty));
-                        }
-                        battery.setStocks(0);
-                        item = battery;
-                        break;
-                    case tube:
-                        Tube tube = new Tube();
-                        tube.setBrand(brand.getText().toString());
-                        tube.setSize(size.getText().toString());
-                        tube.setStocks(0);
-                        item = tube;
-                        break;
-                }
-                Database.addItem(item);
-                Snackbar.make(view, "Item Added Successfully", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+            // Generate Item Object
+            Item item = null;
+            switch (itemType) {
+                case tyre:
+                    Tyre tyre = new Tyre();
+                    tyre.setBrand(brand.getText().toString());
+                    tyre.setCountry(country.getSelectedItem().toString());
+                    // Tyre Make
+                    String tyreMake = make.getText().toString();
+                    if (!tyreMake.isEmpty()) {
+                        tyre.setMake(Integer.valueOf(tyreMake));
+                    }
+                    tyre.setSize(size.getText().toString());
+                    tyre.setStocks(0);
+                    item = tyre;
+                    break;
+                case battery:
+                    Battery battery = new Battery();
+                    battery.setBrand(brand.getText().toString());
+                    // Battery Capacity
+                    String batteryCapacity = capacity.getText().toString();
+                    if (!batteryCapacity.isEmpty()) {
+                        battery.setCapacity(Integer.valueOf(batteryCapacity));
+                    }
+                    // Battery Warranty
+                    String batteryWarranty = warranty.getText().toString();
+                    if (!batteryWarranty.isEmpty()) {
+                        battery.setWarranty(Integer.valueOf(batteryWarranty));
+                    }
+                    battery.setStocks(0);
+                    item = battery;
+                    break;
+                case tube:
+                    Tube tube = new Tube();
+                    tube.setBrand(brand.getText().toString());
+                    tube.setSize(size.getText().toString());
+                    tube.setStocks(0);
+                    item = tube;
+                    break;
             }
+
+            Database.addItem(item)
+                    .addOnSuccessListener(task ->
+                            Snackbar.make(view, "Item Added Successfully", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show()
+                    ).addOnFailureListener(task ->
+                    Snackbar.make(view, "Item Could not be Added", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show()
+            );
+
         });
         builder.setNegativeButton(android.R.string.cancel, null);
         return builder.create();

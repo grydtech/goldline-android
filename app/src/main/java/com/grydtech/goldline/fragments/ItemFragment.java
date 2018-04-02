@@ -1,4 +1,4 @@
-package com.gryd.goldline.fragments;
+package com.grydtech.goldline.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gryd.goldline.R;
-import com.gryd.goldline.data.DataSet;
-import com.gryd.goldline.data.FilterableItemAdapter;
-import com.gryd.goldline.models.ItemType;
+import com.grydtech.goldline.R;
+import com.grydtech.goldline.data.DataSet;
+import com.grydtech.goldline.data.FilterableItemAdapter;
+import com.grydtech.goldline.models.ItemType;
 
 /**
  * Created By: Yasith Jayawardana
@@ -42,6 +42,11 @@ public class ItemFragment extends Fragment {
         if (getArguments() != null) {
             itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
         }
+
+        // Assign DataSet and FilterableItemAdapter
+        dataSet = DataSet.getInstance();
+        filterableItemAdapter = dataSet.getAdapter(getContext(), itemType);
+
         // Inflate the view
         View view;
         switch (itemType) {
@@ -57,10 +62,6 @@ public class ItemFragment extends Fragment {
             default:
                 throw new IllegalArgumentException("Invalid Item Type");
         }
-
-        // Assign DataSet and FilterableItemAdapter
-        dataSet = DataSet.getInstance();
-        filterableItemAdapter = dataSet.getAdapter(getContext(), itemType);
 
         // Assign adapter to RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.view_items);

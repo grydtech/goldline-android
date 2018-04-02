@@ -1,8 +1,9 @@
-package com.gryd.goldline.data;
+package com.grydtech.goldline.data;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.gryd.goldline.models.Item;
+import com.grydtech.goldline.models.Item;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,31 +25,32 @@ public class Database {
         itemsDatabase = database.getReference("item");
 
     }
+
     static DatabaseReference getItemsDatabase() {
         return itemsDatabase;
     }
 
-    public static void addItem(Item item) {
+    public static Task<Void> addItem(Item item) {
         if (item == null) {
-            return;
+            return null;
         }
         String itemType = item.getClass().getSimpleName().toLowerCase();
         String key = String.valueOf(item.hashCode());
-        itemsDatabase.child(itemType).child(key).setValue(item);
+        return itemsDatabase.child(itemType).child(key).setValue(item);
     }
 
-    static void updateItem(Item item) {
+    static Task<Void> updateItem(Item item) {
         String itemType = item.getClass().getSimpleName().toLowerCase();
         String key = String.valueOf(item.hashCode());
         Map<String, Object> itemValues = item.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(String.format("/%s/%s", itemType, key), itemValues);
-        itemsDatabase.updateChildren(childUpdates);
+        return itemsDatabase.updateChildren(childUpdates);
     }
 
-    public static void removeItem(Item item) {
+    public static Task<Void> removeItem(Item item) {
         String itemType = item.getClass().getSimpleName().toLowerCase();
         String key = String.valueOf(item.hashCode());
-        itemsDatabase.child(itemType).child(key).removeValue();
+        return itemsDatabase.child(itemType).child(key).removeValue();
     }
 }
