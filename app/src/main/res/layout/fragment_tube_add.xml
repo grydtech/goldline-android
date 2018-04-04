@@ -19,6 +19,7 @@
 
     <AutoCompleteTextView
         android:id="@+id/txt_brand"
+        android:hint="@string/text_brand"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -46,6 +47,7 @@
 
     <AutoCompleteTextView
         android:id="@+id/txt_size"
+        android:hint="@string/text_size"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

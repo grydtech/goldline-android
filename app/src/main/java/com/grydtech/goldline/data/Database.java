@@ -6,6 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.grydtech.goldline.models.Item;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -34,13 +35,13 @@ public class Database {
         if (item == null) {
             return null;
         }
-        String itemType = item.getClass().getSimpleName().toLowerCase();
+        String itemType = item.getClass().getSimpleName().toLowerCase(Locale.getDefault());
         String key = String.valueOf(item.hashCode());
         return itemsDatabase.child(itemType).child(key).setValue(item);
     }
 
-    static Task<Void> updateItem(Item item) {
-        String itemType = item.getClass().getSimpleName().toLowerCase();
+    public static Task<Void> updateItem(Item item) {
+        String itemType = item.getClass().getSimpleName().toLowerCase(Locale.getDefault());
         String key = String.valueOf(item.hashCode());
         Map<String, Object> itemValues = item.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
@@ -49,7 +50,7 @@ public class Database {
     }
 
     public static Task<Void> removeItem(Item item) {
-        String itemType = item.getClass().getSimpleName().toLowerCase();
+        String itemType = item.getClass().getSimpleName().toLowerCase(Locale.getDefault());
         String key = String.valueOf(item.hashCode());
         return itemsDatabase.child(itemType).child(key).removeValue();
     }

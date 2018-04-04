@@ -83,12 +83,10 @@
         android:id="@+id/txt_stocks"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/lbl_stocks"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_minus"
         app:layout_constraintStart_toEndOf="@+id/h_sep" />
 
     <TextView
@@ -115,4 +113,28 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/lbl_warranty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/h_sep" />
+
+    <Button
+        android:id="@+id/btn_plus"
+        style="@android:style/Widget.DeviceDefault.Button.Small"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/text_plus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_minus"
+        style="@android:style/Widget.DeviceDefault.Light.Button.Small"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/text_minus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_plus" />
 </android.support.constraint.ConstraintLayout>

@@ -46,8 +46,8 @@ public class Tyre extends Item {
         return String.format(
                 Locale.getDefault(),
                 "%s %s (%s) %s",
-                getBrand(),
                 getSize(),
+                getBrand(),
                 getCountry(),
                 getMake() != null ? getMake() : ""
         );

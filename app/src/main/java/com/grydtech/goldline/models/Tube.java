@@ -28,8 +28,8 @@ public class Tube extends Item {
         return String.format(
                 Locale.getDefault(),
                 "%s %s",
-                getBrand(),
-                getSize()
+                getSize(),
+                getBrand()
         );
     }
 

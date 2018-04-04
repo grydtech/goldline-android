@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created By: Yasith Jayawardana
@@ -251,7 +252,7 @@ public final class DataSet {
     }
 
     private void addItem(Item item) {
-        ItemType itemType = ItemType.valueOf(item.getClass().getSimpleName().toLowerCase());
+        ItemType itemType = ItemType.valueOf(item.getClass().getSimpleName().toLowerCase(Locale.getDefault()));
         switch (itemType) {
             case tyre:
                 tyres.add(item);

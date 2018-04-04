@@ -15,9 +15,7 @@
     <string name="text_item_details">Item Details</string>
     <string name="text_make">Make</string>
     <string name="text_minus">-</string>
-    <string name="text_na">N/A</string>
     <string name="text_plus">+</string>
-    <string name="text_qty">Qty:</string>
     <string name="text_settings">Settings</string>
     <string name="text_size">Size</string>
     <string name="text_stocks">Stocks</string>
@@ -32,8 +30,10 @@
 
     <!--Alert messages-->
     <string name="alert_negative_stocks">Stocks should be greater than 0</string>
-    <string name="alert_item_deleted">Item deleted successfully</string>
     <string name="text_confirmation">Are you sure?</string>
     <string name="item_update_success">Item Updated Successfully</string>
+    <string name="text_item_delete_confirmation">Do you really want to delete this record?</string>
+    <string name="text_item_delete_success">Item Removed Successfully</string>
+    <string name="text_item_delete_failure">Item Could not be Removed</string>
 
 </resources>

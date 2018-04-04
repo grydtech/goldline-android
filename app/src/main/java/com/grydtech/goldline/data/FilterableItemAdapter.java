@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.Toast;
 
 import com.grydtech.goldline.R;
 import com.grydtech.goldline.fragments.ItemDetailsFragment;
@@ -19,6 +18,7 @@ import com.grydtech.goldline.models.Item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created By: Yasith Jayawardana
@@ -50,8 +50,8 @@ public class FilterableItemAdapter extends RecyclerView.Adapter<ItemHolder> impl
                 } else {
                     ArrayList<Item> fRecords = new ArrayList<>();
                     for (Item item : itemSource) {
-                        String item_name = item.toString().toLowerCase().trim();
-                        search_text = constraint.toString().toLowerCase().trim();
+                        String item_name = item.toString().toLowerCase(Locale.getDefault()).trim();
+                        search_text = constraint.toString().toLowerCase(Locale.getDefault()).trim();
                         if (item_name.contains(search_text)) {
                             fRecords.add(item);
                         }
@@ -87,7 +87,7 @@ public class FilterableItemAdapter extends RecyclerView.Adapter<ItemHolder> impl
     @NonNull
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_view, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.fragment_items, parent, false);
         final ItemHolder holder = new ItemHolder(view);
 
         final FragmentManager fragmentManager = ((FragmentActivity) FilterableItemAdapter.this.context).getSupportFragmentManager();
@@ -108,30 +108,6 @@ public class FilterableItemAdapter extends RecyclerView.Adapter<ItemHolder> impl
         Log.d(holder.name.toString(), holder.stocks.toString());
         holder.name.setText(item.toString());
         holder.stocks.setText(String.valueOf(item.getStocks()));
-
-        // Set plus click listener
-        holder.setOnPlusClickListener(view -> {
-            int qty = item.getStocks() + 1;
-            item.setStocks(qty);
-            FilterableItemAdapter.this.notifyItemChanged(items.indexOf(item));
-            Database.updateItem(item).addOnCompleteListener(task ->
-                    Toast.makeText(view.getContext(), R.string.item_update_success, Toast.LENGTH_SHORT).show()
-            );
-        });
-
-        // Set minus click listeners
-        holder.setOnMinusClickListener(view -> {
-            int qty = item.getStocks() - 1;
-            if (qty >= 0) {
-                item.setStocks(qty);
-                FilterableItemAdapter.this.notifyItemChanged(items.indexOf(item));
-                Database.updateItem(item).addOnCompleteListener(task ->
-                        Toast.makeText(view.getContext(), R.string.item_update_success, Toast.LENGTH_SHORT).show()
-                );
-            } else {
-                Toast.makeText(view.getContext(), R.string.alert_negative_stocks, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override

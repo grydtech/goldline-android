@@ -126,7 +126,10 @@ public class AddItemFragment extends DialogFragment {
 
         });
         builder.setNegativeButton(android.R.string.cancel, null);
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 
     private View createSubView(@NonNull Context context, @NonNull LayoutInflater inflater, ViewGroup container, Bundle args) {
