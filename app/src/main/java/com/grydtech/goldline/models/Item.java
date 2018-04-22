@@ -50,4 +50,6 @@ public abstract class Item implements Serializable {
     public int hashCode() {
         return brand.hashCode();
     }
+
+    public abstract boolean isValid();
 }

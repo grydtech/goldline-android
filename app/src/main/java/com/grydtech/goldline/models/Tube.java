@@ -62,4 +62,9 @@ public class Tube extends Item {
         result = 31 * result + size.hashCode();
         return result;
     }
+
+    @Override
+    public boolean isValid() {
+        return !getBrand().isEmpty() && !getSize().isEmpty();
+    }
 }

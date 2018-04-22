@@ -88,4 +88,9 @@ public class Tyre extends Item {
         result = 31 * result + country.hashCode();
         return result;
     }
+
+    @Override
+    public boolean isValid() {
+        return !getBrand().isEmpty() && !getSize().isEmpty() && !getCountry().isEmpty();
+    }
 }

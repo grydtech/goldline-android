@@ -3,7 +3,6 @@ package com.grydtech.goldline.fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -40,9 +39,7 @@ public class ConfirmationFragment extends DialogFragment {
         // Build the layout
         builder.setTitle(R.string.text_confirmation);
         builder.setView(R.layout.fragment_confirmation);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
+        builder.setPositiveButton(android.R.string.ok, (dialog, id) -> {
         });
         return builder.create();
     }

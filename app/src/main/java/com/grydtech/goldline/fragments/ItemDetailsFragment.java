@@ -26,6 +26,8 @@ import java.util.Locale;
 
 public class ItemDetailsFragment extends DialogFragment {
 
+    private int editedStocks;
+
     public static ItemDetailsFragment newInstance(Item item) {
         ItemDetailsFragment fragment = new ItemDetailsFragment();
         Bundle args = new Bundle();
@@ -49,7 +51,7 @@ public class ItemDetailsFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
 
-        // Get item, and validate it
+        // Get item, and isValid it
         final Item item = (Item) args.getSerializable("item");
         if (item == null)
             throw new IllegalArgumentException("Item is null");
@@ -60,38 +62,23 @@ public class ItemDetailsFragment extends DialogFragment {
         // Build the layout for item details dialog
         builder.setTitle(R.string.text_item_details);
         View subView = createItemDetailsView(inflater, (ViewGroup) view.getParent(), item);
+
         builder.setView(subView);
 
-        builder.setPositiveButton(android.R.string.ok, null);
-        builder.setNegativeButton(R.string.text_delete, (dialog, which) -> {
-
-            // Build the layout for item delete confirmation dialog
-            final AlertDialog.Builder confirmationDialogBuilder = new AlertDialog.Builder(activity);
-            confirmationDialogBuilder.setTitle(R.string.text_confirmation);
-            confirmationDialogBuilder.setMessage(R.string.text_item_delete_confirmation);
-            confirmationDialogBuilder.setPositiveButton(android.R.string.yes, (dialog1, which1) -> {
-                Database.removeItem(item).addOnCompleteListener(task ->
-                        Toast.makeText(view.getContext(), R.string.text_item_delete_success, Toast.LENGTH_SHORT).show()
-                ).addOnFailureListener(task ->
-                        Toast.makeText(view.getContext(), R.string.text_item_delete_failure, Toast.LENGTH_SHORT).show()
-                );
-                // Close the parent dialog along with confirmation dialog
-                dialog.dismiss();
-            });
-            confirmationDialogBuilder.setNegativeButton(android.R.string.no, null);
-            confirmationDialogBuilder.create().show();
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            item.setStocks(editedStocks);
+            Database.updateItem(item).addOnCompleteListener(task ->
+                    Toast.makeText(view.getContext(), R.string.item_update_success, Toast.LENGTH_SHORT).show()
+            );
         });
-
-        Dialog dialog = builder.create();
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        return dialog;
+        builder.setNegativeButton(android.R.string.cancel, null);
+        return builder.create();
     }
 
     private View createItemDetailsView(@NonNull LayoutInflater inflater, ViewGroup container, Item item) {
         ItemType itemType = ItemType.valueOf(item.getClass().getSimpleName().toLowerCase(Locale.getDefault()));
         TextView brand, stocks, size, make, country, capacity, warranty;
-        Button btn_plus, btn_minus;
+        Button btn_plus, btn_minus, btn_delete;
         View view;
         // Assign value to view object
         switch (itemType) {
@@ -118,10 +105,12 @@ public class ItemDetailsFragment extends DialogFragment {
         warranty = view.findViewById(R.id.txt_warranty);
         btn_plus = view.findViewById(R.id.btn_plus);
         btn_minus = view.findViewById(R.id.btn_minus);
+        btn_delete = view.findViewById(R.id.btn_delete);
 
         // Update TextViews
         brand.setText(item.getBrand());
-        stocks.setText(String.valueOf(item.getStocks()));
+        editedStocks = item.getStocks();
+        stocks.setText(String.valueOf(editedStocks));
         switch (itemType) {
             case tyre:
                 size.setText(((Tyre) item).getSize());
@@ -141,26 +130,35 @@ public class ItemDetailsFragment extends DialogFragment {
 
         // Set plus click listener
         btn_plus.setOnClickListener(v -> {
-            int qty = item.getStocks() + 1;
-            item.setStocks(qty);
-            stocks.setText(String.valueOf(item.getStocks()));
-            Database.updateItem(item).addOnCompleteListener(task ->
-                    Toast.makeText(view.getContext(), R.string.item_update_success, Toast.LENGTH_SHORT).show()
-            );
+            editedStocks++;
+            stocks.setText(String.valueOf(editedStocks));
         });
 
         // Set minus click listeners
         btn_minus.setOnClickListener(v -> {
-            int qty = item.getStocks() - 1;
-            if (qty >= 0) {
-                item.setStocks(qty);
-                stocks.setText(String.valueOf(item.getStocks()));
-                Database.updateItem(item).addOnCompleteListener(task ->
-                        Toast.makeText(view.getContext(), R.string.item_update_success, Toast.LENGTH_SHORT).show()
-                );
+            if (editedStocks - 1 >= 0) {
+                stocks.setText(String.valueOf(--editedStocks));
             } else {
                 Toast.makeText(view.getContext(), R.string.alert_negative_stocks, Toast.LENGTH_SHORT).show();
             }
+        });
+
+        btn_delete.setOnClickListener(v -> {
+            // Build the layout for item delete confirmation dialog
+            final AlertDialog.Builder confirmationDialogBuilder = new AlertDialog.Builder(v.getContext());
+            confirmationDialogBuilder.setTitle(R.string.text_confirmation);
+            confirmationDialogBuilder.setMessage(R.string.text_item_delete_confirmation);
+            confirmationDialogBuilder.setPositiveButton(android.R.string.yes, (dialog1, which1) -> {
+                Database.removeItem(item).addOnCompleteListener(task ->
+                        Toast.makeText(view.getContext(), R.string.text_item_delete_success, Toast.LENGTH_SHORT).show()
+                ).addOnFailureListener(task ->
+                        Toast.makeText(view.getContext(), R.string.text_item_delete_failure, Toast.LENGTH_SHORT).show()
+                );
+                // Close the parent dialog along with confirmation dialog
+                ItemDetailsFragment.this.dismiss();
+            });
+            confirmationDialogBuilder.setNegativeButton(android.R.string.no, null);
+            confirmationDialogBuilder.create().show();
         });
 
         return view;

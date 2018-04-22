@@ -73,4 +73,9 @@ public class Battery extends Item {
         result = 31 * result + capacity;
         return result;
     }
+
+    @Override
+    public boolean isValid() {
+        return !getBrand().isEmpty() && getCapacity() != null;
+    }
 }

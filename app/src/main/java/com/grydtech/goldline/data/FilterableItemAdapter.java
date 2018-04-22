@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 
+import com.grydtech.goldline.HomeActivity;
 import com.grydtech.goldline.R;
 import com.grydtech.goldline.fragments.ItemDetailsFragment;
 import com.grydtech.goldline.models.Item;
@@ -93,10 +94,13 @@ public class FilterableItemAdapter extends RecyclerView.Adapter<ItemHolder> impl
         final FragmentManager fragmentManager = ((FragmentActivity) FilterableItemAdapter.this.context).getSupportFragmentManager();
         // Add item click listener
         view.setOnClickListener(v -> {
-            ItemDetailsFragment fragment = ItemDetailsFragment.newInstance(
-                    items.get(holder.getAdapterPosition())
-            );
-            fragment.show(fragmentManager, "Item Details");
+            if (HomeActivity.isAuthorized) {
+                ItemDetailsFragment fragment = ItemDetailsFragment.newInstance(
+                        items.get(holder.getAdapterPosition())
+                );
+
+                fragment.show(fragmentManager, "Item Details");
+            }
         });
 
         return holder;

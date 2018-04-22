@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.grydtech.goldline.R;
 import com.grydtech.goldline.data.DataSet;
@@ -57,76 +59,84 @@ public class AddItemFragment extends DialogFragment {
 
         final View view = activity.findViewById(R.id.main_content);
         final View subView = createSubView(activity, inflater, (ViewGroup) view.getParent(), args);
+        final ItemType itemType = ItemType.valueOf(args.getInt("itemType", 0));
 
         // Build the layout
-        builder.setTitle(R.string.text_add_item);
+        builder.setTitle(String.format("Add %s", itemType.toString()));
         builder.setView(subView);
-        builder.setPositiveButton(android.R.string.ok, (dialog, id) -> {
-
-            // Item Type
-            ItemType itemType = ItemType.valueOf(getArguments().getInt("itemType", 0));
-
-            // Variables
-            AutoCompleteTextView brand = subView.findViewById(R.id.txt_brand);
-            AutoCompleteTextView size = subView.findViewById(R.id.txt_size);
-            AutoCompleteTextView make = subView.findViewById(R.id.txt_make);
-            AutoCompleteTextView capacity = subView.findViewById(R.id.txt_capacity);
-            AutoCompleteTextView warranty = subView.findViewById(R.id.txt_warranty);
-            Spinner country = subView.findViewById(R.id.txt_country);
-
-            // Generate Item Object
-            Item item = null;
-            switch (itemType) {
-                case tyre:
-                    Tyre tyre = new Tyre();
-                    tyre.setBrand(brand.getText().toString());
-                    tyre.setCountry(country.getSelectedItem().toString());
-                    // Tyre Make
-                    String tyreMake = make.getText().toString();
-                    if (!tyreMake.isEmpty()) {
-                        tyre.setMake(Integer.valueOf(tyreMake));
-                    }
-                    tyre.setSize(size.getText().toString());
-                    tyre.setStocks(0);
-                    item = tyre;
-                    break;
-                case battery:
-                    Battery battery = new Battery();
-                    battery.setBrand(brand.getText().toString());
-                    // Battery Capacity
-                    String batteryCapacity = capacity.getText().toString();
-                    if (!batteryCapacity.isEmpty()) {
-                        battery.setCapacity(Integer.valueOf(batteryCapacity));
-                    }
-                    // Battery Warranty
-                    String batteryWarranty = warranty.getText().toString();
-                    if (!batteryWarranty.isEmpty()) {
-                        battery.setWarranty(Integer.valueOf(batteryWarranty));
-                    }
-                    battery.setStocks(0);
-                    item = battery;
-                    break;
-                case tube:
-                    Tube tube = new Tube();
-                    tube.setBrand(brand.getText().toString());
-                    tube.setSize(size.getText().toString());
-                    tube.setStocks(0);
-                    item = tube;
-                    break;
-            }
-
-            Database.addItem(item)
-                    .addOnSuccessListener(task ->
-                            Snackbar.make(view, "Item Added Successfully", Snackbar.LENGTH_SHORT)
-                                    .setAction("Action", null).show()
-                    ).addOnFailureListener(task ->
-                    Snackbar.make(view, "Item Could not be Added", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show()
-            );
-
-        });
+        builder.setPositiveButton(android.R.string.ok, null);
         builder.setNegativeButton(android.R.string.cancel, null);
         Dialog dialog = builder.create();
+
+        // Set positive button behaviour
+        dialog.setOnShowListener(dialogInterface -> {
+            Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(view1 -> {
+                // Variables
+                AutoCompleteTextView brand = subView.findViewById(R.id.txt_brand);
+                AutoCompleteTextView size = subView.findViewById(R.id.txt_size);
+                AutoCompleteTextView make = subView.findViewById(R.id.txt_make);
+                AutoCompleteTextView capacity = subView.findViewById(R.id.txt_capacity);
+                AutoCompleteTextView warranty = subView.findViewById(R.id.txt_warranty);
+                Spinner country = subView.findViewById(R.id.txt_country);
+
+                // Generate Item Object
+                Item item = null;
+                switch (itemType) {
+                    case tyre:
+                        Tyre tyre = new Tyre();
+                        tyre.setBrand(brand.getText().toString());
+                        tyre.setCountry(country.getSelectedItem().toString());
+                        // Tyre Make
+                        String tyreMake = make.getText().toString();
+                        if (!tyreMake.isEmpty()) {
+                            tyre.setMake(Integer.valueOf(tyreMake));
+                        }
+                        tyre.setSize(size.getText().toString());
+                        tyre.setStocks(0);
+                        item = tyre;
+                        break;
+                    case battery:
+                        Battery battery = new Battery();
+                        battery.setBrand(brand.getText().toString());
+                        // Battery Capacity
+                        String batteryCapacity = capacity.getText().toString();
+                        if (!batteryCapacity.isEmpty()) {
+                            battery.setCapacity(Integer.valueOf(batteryCapacity));
+                        }
+                        // Battery Warranty
+                        String batteryWarranty = warranty.getText().toString();
+                        if (!batteryWarranty.isEmpty()) {
+                            battery.setWarranty(Integer.valueOf(batteryWarranty));
+                        }
+                        battery.setStocks(0);
+                        item = battery;
+                        break;
+                    case tube:
+                        Tube tube = new Tube();
+                        tube.setBrand(brand.getText().toString());
+                        tube.setSize(size.getText().toString());
+                        tube.setStocks(0);
+                        item = tube;
+                        break;
+                }
+
+                if (item.isValid()) {
+                    Database.addItem(item)
+                            .addOnSuccessListener(task ->
+                                    Snackbar.make(view, "Item Added Successfully", Snackbar.LENGTH_SHORT)
+                                            .setAction("Action", null).show()
+                            ).addOnFailureListener(task ->
+                            Snackbar.make(view, "Item Could not be Added", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show()
+                    );
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(view.getContext(), "Please fill in all required fields", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+        dialog.show();
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         return dialog;

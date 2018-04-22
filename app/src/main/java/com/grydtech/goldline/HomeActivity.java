@@ -10,11 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.grydtech.goldline.fragments.AddItemFragment;
 import com.grydtech.goldline.models.ItemType;
 
 public class HomeActivity extends AppCompatActivity {
+
+    public static boolean isAuthorized = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +27,7 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+        // Create the adapter that will return a fragment for each of the three primary sections of the activity.
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -40,11 +42,14 @@ public class HomeActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         final FragmentManager fragmentManager = getSupportFragmentManager();
         fab.setOnClickListener(view -> {
-            ItemType itemType = ItemType.valueOf(tabLayout.getSelectedTabPosition());
-            DialogFragment fragment = AddItemFragment.newInstance(itemType);
-            fragment.show(fragmentManager, getString(R.string.tag_item_fragment));
+            if (isAuthorized) {
+                ItemType itemType = ItemType.valueOf(tabLayout.getSelectedTabPosition());
+                DialogFragment fragment = AddItemFragment.newInstance(itemType);
+                fragment.show(fragmentManager, getString(R.string.tag_item_fragment));
+            } else {
+                Toast.makeText(this, "Not authorized", Toast.LENGTH_SHORT).show();
+            }
         });
-
     }
 
 
@@ -57,16 +62,21 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // Handle action bar item clicks here. The action bar will automatically handle clicks on
+        // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_switch_lock) {
+            if (isAuthorized) {
+                isAuthorized = false;
+                item.setIcon(R.drawable.ic_lock_outline_black_24dp);
+            } else {
+                isAuthorized = true;
+                item.setIcon(R.drawable.ic_lock_open_black_24dp);
+            }
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

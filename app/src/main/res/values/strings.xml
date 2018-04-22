@@ -35,5 +35,6 @@
     <string name="text_item_delete_confirmation">Do you really want to delete this record?</string>
     <string name="text_item_delete_success">Item Removed Successfully</string>
     <string name="text_item_delete_failure">Item Could not be Removed</string>
+    <string name="lock_unlock">Lock/Unlock</string>
 
 </resources>
