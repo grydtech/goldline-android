@@ -88,7 +88,7 @@ public class FilterableItemAdapter extends RecyclerView.Adapter<ItemHolder> impl
     @NonNull
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_items, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.fragment_item_row, parent, false);
         final ItemHolder holder = new ItemHolder(view);
 
         final FragmentManager fragmentManager = ((FragmentActivity) FilterableItemAdapter.this.context).getSupportFragmentManager();

@@ -70,10 +70,10 @@ public class HomeActivity extends AppCompatActivity {
         if (id == R.id.action_switch_lock) {
             if (isAuthorized) {
                 isAuthorized = false;
-                item.setIcon(R.drawable.ic_lock_outline_black_24dp);
+                item.setIcon(R.drawable.ic_lock_closed_24dp);
             } else {
                 isAuthorized = true;
-                item.setIcon(R.drawable.ic_lock_open_black_24dp);
+                item.setIcon(R.drawable.ic_lock_open_24dp);
             }
             return true;
         }

@@ -46,22 +46,8 @@ public class ItemFragment extends Fragment {
         // Assign DataSet and FilterableItemAdapter
         dataSet = DataSet.getInstance();
         filterableItemAdapter = dataSet.getAdapter(getContext(), itemType);
-
         // Inflate the view
-        View view;
-        switch (itemType) {
-            case tyre:
-                view = inflater.inflate(R.layout.fragment_tyre, container, false);
-                break;
-            case battery:
-                view = inflater.inflate(R.layout.fragment_battery, container, false);
-                break;
-            case tube:
-                view = inflater.inflate(R.layout.fragment_tube, container, false);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid Item Type");
-        }
+        View view = inflater.inflate(R.layout.fragment_items, container, false);
 
         // Assign adapter to RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.view_items);
@@ -70,9 +56,8 @@ public class ItemFragment extends Fragment {
 
         // Add listeners to SearchView
         final SearchView searchView = view.findViewById(R.id.search_bar);
+        searchView.setQueryHint(String.format("Search %s", itemType.toString()));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;

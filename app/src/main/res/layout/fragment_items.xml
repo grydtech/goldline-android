@@ -1,42 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Widget.AppCompat.TextView.SpinnerItem"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true">
+    android:layout_height="match_parent"
+    tools:context="com.grydtech.goldline.fragments.ItemFragment">
 
-    <TextView
-        android:id="@+id/txt_name"
+    <android.support.v7.widget.SearchView
+        android:id="@+id/search_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:singleLine="true"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/txt_stocks"
+        app:defaultQueryHint="@string/hint_search"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="@string/hint_search" />
 
-    <TextView
-        android:id="@+id/txt_stocks"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/view_items"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:width="50dp"
-        android:background="?attr/colorPrimary"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
-        android:textStyle="bold"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
 
 </android.support.constraint.ConstraintLayout>

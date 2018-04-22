@@ -24,9 +24,7 @@
     <string name="text_warranty">Warranty (Y)</string>
 
     <!--Search Hints-->
-    <string name="hint_search_batteries">Search Batteries</string>
-    <string name="hint_search_tubes">Search Tubes</string>
-    <string name="hint_search_tyres">Search Tyres</string>
+    <string name="hint_search">Search</string>
 
     <!--Alert messages-->
     <string name="alert_negative_stocks">Stocks should be greater than 0</string>
