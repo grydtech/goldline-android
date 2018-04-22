@@ -34,5 +34,8 @@
     <string name="text_item_delete_success">Item Removed Successfully</string>
     <string name="text_item_delete_failure">Item Could not be Removed</string>
     <string name="lock_unlock">Lock/Unlock</string>
+    <string name="password_prompt">Please enter your password</string>
+    <string name="password">Password</string>
+    <string name="str_locked">Locked</string>
 
 </resources>

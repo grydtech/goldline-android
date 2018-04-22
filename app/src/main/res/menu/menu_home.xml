@@ -3,9 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.grydtech.goldline.HomeActivity">
     <item
+        android:id="@+id/txt_lock_status"
+        android:checkable="false"
+        android:checked="false"
+        android:title="Locked"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_switch_lock"
         android:icon="@drawable/ic_lock_closed_24dp"
         android:orderInCategory="100"
-        app:showAsAction="always"
-        android:title="@string/lock_unlock" />
+        android:title="@string/lock_unlock"
+        app:showAsAction="always|withText" />
 </menu>
