@@ -82,9 +82,9 @@ public class HomeActivity extends AppCompatActivity {
                 statusText.setTitle(R.string.str_locked);
                 item.setIcon(R.drawable.ic_lock_closed_24dp);
             } else {
-                countDownTimer = new CountDownTimer(30000, 1000) {
+                countDownTimer = new CountDownTimer(120000, 1000) {
                     public void onTick(long millisUntilFinished) {
-                        statusText.setTitle(String.format("Unlocked for %s s", millisUntilFinished / 1000));
+                        statusText.setTitle(String.format("Unlocked for %s s", millisUntilFinished / 1000 + 1));
                     }
 
                     public void onFinish() {
